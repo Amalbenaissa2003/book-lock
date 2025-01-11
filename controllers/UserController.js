@@ -3,64 +3,81 @@ const User = require("../models/User");
 //Register user
 exports.register = async (req, res) => {
     const { firstName, lastName, email, password, confirmPassword } = req.body;
+    const errors = {};  // Objet pour stocker les erreurs de validation
 
-    // Vérifier les validations
+    // Vérifications des validations et ajout des erreurs à l'objet 'errors'
     if (!firstName || firstName.length < 2) {
-        return res.status(400).json({ message: "Le prénom doit comporter au moins 2 caractères." });
+        errors.firstName = "Le prénom doit comporter au moins 2 caractères.";
     }
     if (!lastName || lastName.length < 2) {
-        return res.status(400).json({ message: "Le nom doit comporter au moins 2 caractères." });
+        errors.lastName = "Le nom doit comporter au moins 2 caractères.";
     }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email || !emailRegex.test(email)) {
-        return res.status(400).json({ message: "Veuillez introduire une adresse e-mail valide." });
+        errors.email = "Veuillez introduire une adresse e-mail valide.";
     }
     if (!password || password.length < 8) {
-        return res.status(400).json({ message: "Le mot de passe doit comporter au moins 8 caractères." });
+        errors.password = "Le mot de passe doit comporter au moins 8 caractères.";
     }
     if (password !== confirmPassword) {
-        return res.status(400).json({ message: "Les mots de passe ne correspondent pas." });
+        errors.confirmPassword = "Les mots de passe ne correspondent pas.";
+    }
+
+    // Si des erreurs ont été trouvées, les renvoyer dans la réponse
+    if (Object.keys(errors).length > 0) {
+        return res.status(400).json({
+            type: "error",
+            errors
+        });
     }
 
     try {
         // Vérifier si l'utilisateur existe déjà
         const user = await User.findOne({ email });
         if (user) {
-            return res.status(400).json({ message: "Adresse e-mail existe déjà." });
+            return res.status(400).json({ type: "error",message: "Adresse e-mail existe déjà." });
         }
+
         // Création de l'utilisateur
-        const newUser = new User ({firstName,lastName,email,password});
+        const newUser = new User({ firstName, lastName, email, password });
         await newUser.save();
-    
-        res.status(201).json({ message: "Utilisateur enregistré avec succès !" });
+
+        res.status(201).json({ type: "success", message: "Utilisateur enregistré avec succès !" });
     } catch (err) {
-        res.status(500).json({ message: "Une erreur s'est produite lors de l'inscription.", error: err.message });
+        res.status(500).json({ type: "error" ,message: "Une erreur s'est produite lors de l'inscription.", error: err.message });
     }
 };
 
 
-//login user
 
+//login user
 exports.login = async (req, res) => {
     const { email, password } = req.body;
+    const errors = {};
 
     if (!email) {
-        return res.status(400).json({ message: "Email est requis" });
+        errors.email = "Email est requis" ;
     }
     if (!password) {
-        return res.status(400).json({ message: "Mot de passe est requis." });
+        errors.password ="Mot de passe est requis." ;
     }
 
+    if (Object.keys(errors).length > 0) {
+        return res.status(400).json({
+            type: "error",
+            errors
+        });
+    }
     try {
         // Vérifier si l'utilisateur existe
         const user = await User.findOne({ email });
         if (!user) {
-            return res.status(401).json({ message: "Utilisateur non trouvé." });
+            res.status(201).json({ type: "error", message: "Utilisateur non trouvé." });
         }
         
 
         const isMatch = await user.matchPassword(password) ;
-        if (!isMatch) return res.status(400).json({ message: 'Mot de passe incorrect' });
+        if (!isMatch) return res.status(201).json({ type: "error", message: 'Mot de passe incorrect' });
         
         
         // Crée une session pour l'utilisateur
@@ -70,7 +87,7 @@ exports.login = async (req, res) => {
             lastName: user.lastName };
 
 
-        res.status(200).json({ message: "Connexion réussie !", user: req.session.user  });
+            res.status(201).json({ type:"success", message: "Connexion réussie !", user: req.session.user  });
 
     } catch (err) {
         res.status(500).json({ message: "Une erreur s'est produite lors de la connexion.", error: err.message });

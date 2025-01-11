@@ -14,15 +14,12 @@ connectDB();
 const app = express();
 
 
-app.use(
-  cors({
-    origin: process.env.FRONTEND_URL || "http://localhost:5000", // URL du client
-    credentials: true, // Autoriser l'envoi des cookies
-  })
-);
-
 // Middleware
-app.use(cors()); // Pour autoriser les requêtes cross-origin
+app.use(cors({
+  credentials: true 
+}));
+
+
 app.use(express.json()); 
 
 
@@ -37,15 +34,12 @@ app.use(
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24, // 1 jour
     },
-    store: MongoStore.create({
-      mongoUrl: `mongodb+srv://amalbenaissa:mongo_12345@cluster0.1qyk4.mongodb.net/BookClub`, 
-    }),
   })
 );
 
 // Routes
 app.use('/api/user', authRoutes);
-app.use("/books", bookRoutes);
+app.use("/api/books", bookRoutes);
 
 // Démarrer le serveur
 const PORT = process.env.PORT || 5000;

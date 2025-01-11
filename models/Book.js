@@ -12,7 +12,11 @@ const bookSchema = new mongoose.Schema({
         type: String,
         required:true,
         minlength:5,
-    },  
+    }, 
+    image: {
+        type: String, 
+        required: true, 
+    }, 
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",

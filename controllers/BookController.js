@@ -3,15 +3,18 @@ const Book = require('../models/Book');
 
 //ajouter un livre
 exports.addBook = async (req,res)=> {
-    const {title, description}=req.body;
+    const {title, description ,image}=req.body;
 
     if (!title ){
         return res.status(400).json({message: "Titre est requis"});
     }
     if (!description || description.length < 5){
-        return res.status(400).json({message: "Description doit comporter au moins 5 caractères."});
+        return res.status(400).json({message: "Description est requise et doit comporter au moins 5 caractères."});
+    }    
+    if (!image) {
+        return res.status(400).json({ message: "L'image est requise." });
     }
-
+    
     try{
 
         //verification de l'existance du livre
@@ -22,6 +25,7 @@ exports.addBook = async (req,res)=> {
         const newBook = await Book.create({
             title,
             description,
+            image,
             createdBy: req.user.id, // `req.user` contient l'utilisateur connecté
         });
 
@@ -70,7 +74,7 @@ exports.getBookDetails = async (req, res) => {
 
 exports.updateBook = async (req, res) => {
     const { bookId } = req.params;
-    const { title, description } = req.body;
+    const { title, description,image } = req.body;
 
     try {
         const book = await Book.findById(bookId);
@@ -85,6 +89,7 @@ exports.updateBook = async (req, res) => {
         // Mettre à jour le livre
         if (title) book.title = title;
         if (description) book.description = description;
+        if (image) book.image = image;
         await book.save();
 
         res.status(200).json({ message: "Livre mis à jour avec succès!", book });
@@ -106,7 +111,7 @@ exports.deleteBook = async (req, res) => {
             return res.status(403).json({ message: "Vous n'avez pas le droit de supprimer le livre." });
         }
 
-        await book.remove();
+        await book.deleteOne({ _id: bookId })
 
         res.status(200).json({ message: "Livre supprimé avec succès!" });
     } catch (err) {
