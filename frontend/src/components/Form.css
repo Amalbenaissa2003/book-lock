@@ -1,0 +1,169 @@
+/* Global Styles */
+/*body {
+    font-family: "Nunito Sans", sans-serif;
+    background-color: #f7f9fc;
+    margin: 0;
+    padding: 0;
+  }
+  
+  
+  .container {
+    margin-top: 50px;
+  }
+  
+  
+  form {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+  }
+  
+  
+  .book-club-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: #4a4a4a;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+  }
+  
+  .form-group{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+
+   }
+
+  .form-label {
+    font-size: 14px;
+    color: #4a4a4a;
+    margin-bottom: 5px;
+    display: block;
+  }
+  
+ 
+  .form-control {
+    border:2px solid #ededed;
+    border-radius :10px;
+    font-size: 13px;
+    padding:20px;
+    width: 30%;
+    align-self: center;
+    font-family: monospace;
+  }*/
+  
+  
+  /* Error Messages */
+  .text-danger {
+    font-size: 18px;
+    margin-top: 15px;
+    color: #6d6d6d;
+  }
+  
+  /* Success and Error Alerts */
+  .alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
+  .alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
+
+  /*.btn-primary{
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 15px;
+    border: 2px solid #ededed;
+    background: #e53637;
+    color: #ffffff;
+    margin: 20px;
+    }
+  .btn {
+    text-align: center;
+
+  }*/
+  
+  .register-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #f9f9f9;
+    font-family: Arial, sans-serif;
+  }
+  
+  .register-title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .highlight {
+    color: #d63384;
+  }
+  
+  .register-form {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+  }
+  
+  .form-input  {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+  }
+  
+  .form-input:focus {
+    outline: none;
+    border-color: #d63384;
+    box-shadow: 0 0 5px rgba(214, 51, 132, 0.5);
+  }
+  
+  .form-button {
+    background-color: #d63384;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  
+  .form-button:hover {
+    background-color: #c02675;
+  }
+  
+  .login-link {
+    margin-top: 10px;
+    font-size: 0.9rem;
+  }
+  
+  .link {
+    color: #d63384;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .link:hover {
+    text-decoration: underline;
+  }
+
+  
+  
+  
+  
