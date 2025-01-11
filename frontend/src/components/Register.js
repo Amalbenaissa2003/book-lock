@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import imagePath from '../assets/6.jpg';
-import { useNavigate } from "react-router-dom";
+import { useNavigate , Link } from "react-router-dom";
 import "./style.css";
 
 const Register = () => {
@@ -141,7 +141,7 @@ const Register = () => {
           />
           {errors.confirmPassword && <p className="error-message">{errors.confirmPassword}</p>}
         </div>
-        <p className="paragraph-text">Vous n'avez pas de compte ?<a href="./Login.js" className="link-text"> S'inscrire</a></p>
+        <p className="paragraph-text">Vous n'avez pas de compte ?<Link to="/login" className="link-text"> Se connecter</Link></p>
        
         <button type="submit" className="btn-submit">
           S'inscrire

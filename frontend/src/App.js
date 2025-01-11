@@ -5,8 +5,12 @@ import Register from './components/Register';
 import Login from './components/Login'; 
 import About from './components/About'; 
 import AllBooks from "./components/AllBooks";
+import AddBook from "./components/AddBook";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
+  const isAuthenticated = !!localStorage.getItem("user"); // Vérifie si l'utilisateur est connecté
+
   return (
     <Router>
       <div>
@@ -14,18 +18,27 @@ function App() {
           <Link className="navbar-brand" to="/">Accueil</Link>
           <div className="collapse navbar-collapse">
             <ul className="navbar-nav">
-              <li className="nav-item">
-                <Link className="nav-link" to="/register">S'inscrire</Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/login">Se connecter</Link>
-              </li>
+              {!isAuthenticated && (
+                <>
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/register">S'inscrire</Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/login">Se connecter</Link>
+                  </li>
+                </>
+              )}
               <li className="nav-item">
                 <Link className="nav-link" to="/aboutus">About Us</Link>
               </li>
               <li className="nav-item">
                 <Link className="nav-link" to="/allBooks">All Books</Link>
               </li>
+              {isAuthenticated && (
+                <li className="nav-item">
+                  <Link className="nav-link" to="/add-book">Add Book</Link>
+                </li>
+              )}
             </ul>
           </div>
         </nav>
@@ -35,6 +48,14 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/aboutus" element={<About />} />
           <Route path="/allBooks" element={<AllBooks />} />
+          <Route
+            path="/add-book"
+            element={
+              <ProtectedRoute isAuthenticated={isAuthenticated}>
+                <AddBook />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </div>
     </Router>

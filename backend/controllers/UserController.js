@@ -72,12 +72,12 @@ exports.login = async (req, res) => {
         // Vérifier si l'utilisateur existe
         const user = await User.findOne({ email });
         if (!user) {
-            res.status(201).json({ type: "error", message: "Utilisateur non trouvé." });
+            res.status(401).json({ type: "error", message: "Utilisateur non trouvé." });
         }
         
 
         const isMatch = await user.matchPassword(password) ;
-        if (!isMatch) return res.status(201).json({ type: "error", message: 'Mot de passe incorrect' });
+        if (!isMatch) return res.status(401).json({ type: "error", message: 'Mot de passe incorrect' });
         
         
         // Crée une session pour l'utilisateur
